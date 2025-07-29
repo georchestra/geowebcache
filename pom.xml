@@ -461,6 +461,20 @@
   </profiles>
   <repositories>
     <repository>
+      <snapshots>
+        <enabled>true</enabled>
+        <checksumPolicy>ignore</checksumPolicy>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+        <checksumPolicy>ignore</checksumPolicy>
+        <updatePolicy>always</updatePolicy>
+      </releases>
+      <id>georchestra</id>
+      <url>https://artifactory.georchestra.org/artifactory/maven</url>
+    </repository>
+    <repository>
       <id>osgeo</id>
       <name>OSGeo Nexus Release Repository</name>
       <url>https://repo.osgeo.org/repository/release/</url>
