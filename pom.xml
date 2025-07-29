@@ -2,14 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.georchestra</groupId>
-    <artifactId>root</artifactId>
-    <version>25.1-SNAPSHOT</version>
-  </parent>
   <groupId>org.georchestra</groupId>
   <artifactId>geowebcache-webapp</artifactId>
-  <version>25.1-SNAPSHOT</version>
+  <version>1.27.0-SNAPSHOT</version>
 
   <packaging>jar</packaging>
   <name>geOrchestra GeoWebCache Web Application</name>
@@ -17,6 +12,7 @@
     <gwc.unpack.dir>${project.build.directory}/unpacked-webapp</gwc.unpack.dir>
     <geowebcache.war.excludes />
     <maven.test.skip>false</maven.test.skip>
+    <georchestra.version>25.1-SNAPSHOT</georchestra.version>
     <gwc.version>1.27.0</gwc.version>
     <!-- override dependencies from parent pom to match the ones for the gwc version -->
     <gt.version>33.0</gt.version>
@@ -43,7 +39,7 @@
     <dependency>
       <groupId>org.georchestra</groupId>
       <artifactId>georchestra-commons</artifactId>
-      <version>${project.version}</version>
+      <version>${georchestra.version}</version>
     </dependency>
     <dependency>
       <groupId>org.geowebcache</groupId>
@@ -124,10 +120,12 @@
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-web</artifactId>
+      <version>${spring-security.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-config</artifactId>
+      <version>${spring-security.version}</version>
     </dependency>
 
     <dependency>
@@ -152,6 +150,7 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <scope>test</scope>
+      <version>${spring.version}</version>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
@@ -460,4 +459,31 @@
       </build>
     </profile>
   </profiles>
+  <repositories>
+    <repository>
+      <id>osgeo</id>
+      <name>OSGeo Nexus Release Repository</name>
+      <url>https://repo.osgeo.org/repository/release/</url>
+      <!-- contains release (including third-party-dependences)                            -->
+      <!-- ucar (https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases) -->
+      <!-- geosolutions (http://maven.geo-solutions.it/)                                   -->
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
+    <repository>
+      <id>osgeo-snapshot</id>
+      <name>OSGeo Nexus Snapshot Repository</name>
+      <url>https://repo.osgeo.org/repository/snapshot/</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </repository>
+  </repositories>
 </project>
