@@ -10,13 +10,13 @@ This is a geOrchestra specific re-packaging of GeoWebcache with customized exten
 ## Build
 
 ```
-mvn clean install -f geowebcache-webapp
+mvn clean install
 ```
 
 ### Docker
 
 ```
-make docker-build-geowebcache
+make docker-build
 ```
 
 ## Integration approach
