@@ -189,9 +189,35 @@
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>3.5.3</version>
                 </plugin>
+                <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>4.0.0</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <prefix>build</prefix>
+                    <failOnNoGitDirectory>false</failOnNoGitDirectory>
+                    <skipPoms>false</skipPoms>
+                    <verbose>false</verbose>
+                    <gitDescribe>
+                        <tags>true</tags>
+                    </gitDescribe>
+                    <injectIntoSysProperties>true</injectIntoSysProperties>
+                </configuration>
+            </plugin>
             <plugin>
                 <!-- configure failsafe to run integration tests. Use mvn verify to run only integration tests -->
                 <groupId>org.apache.maven.plugins</groupId>
