@@ -1,6 +1,6 @@
 # GeoWebCache distribution for geOrchestra
 
-![geowebcache](https://github.com/georchestra/georchestra/workflows/geowebcache/badge.svg)
+![geowebcache](https://github.com/georchestra/geowebcache/workflows/geowebcache/badge.svg)
 
 This is a geOrchestra specific re-packaging of GeoWebcache with customized extensions to
 
