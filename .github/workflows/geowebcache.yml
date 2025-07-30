@@ -28,7 +28,7 @@ jobs:
       run: mvn --no-transfer-progress -B -Dfmt.action=validate install -Dadditionalparam=-Xdoclint:none -DskipTests
 
     - name: "Running tests"
-      run: mvn --no-transfer-progress clean verify -Pit -Dfmt.skip=true -Dadditionalparam=-Xdoclint:none
+      run: mvn --no-transfer-progress clean verify -Dfmt.skip=true -Dadditionalparam=-Xdoclint:none
 
     - name: Getting image tag
       if: github.repository == 'georchestra/geowebcache' && github.actor != 'dependabot[bot]'
