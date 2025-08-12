@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.georchestra</groupId>
-    <artifactId>geowebcache-webapp</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>geowebcache</artifactId>
+    <version>25.1.0</version>
 
     <packaging>jar</packaging>
     <name>geOrchestra GeoWebCache Web Application</name>
@@ -12,7 +12,7 @@
         <gwc.unpack.dir>${project.build.directory}/unpacked-webapp</gwc.unpack.dir>
         <geowebcache.war.excludes/>
         <maven.test.skip>false</maven.test.skip>
-        <georchestra.version>25.1-SNAPSHOT</georchestra.version>
+        <georchestra.version>25.0.0</georchestra.version>
         <gwc.version>1.27.0</gwc.version>
         <!-- override dependencies from parent pom to match the ones for the gwc version -->
         <gt.version>33.0</gt.version>
