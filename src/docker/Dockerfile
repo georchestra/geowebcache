@@ -1,5 +1,5 @@
 # Multistage to unzip the war file and set correct permissions on the data directories
-FROM debian:bookworm-slim as builder
+FROM debian:trixie-slim as builder
 
 RUN mkdir -p /geowebcache
 COPY var/lib/jetty/webapps/geowebcache.war /
@@ -10,7 +10,7 @@ RUN apt-get update && \
 
 RUN unzip -d /geowebcache /geowebcache.war
 
-FROM jetty:9-jre11 as geowebcache
+FROM jetty:9-jre17 as geowebcache
 
 ENV GEOWEBCACHE_CONFIG_DIR=/mnt/geowebcache_datadir \
     GEOWEBCACHE_CACHE_DIR=/mnt/geowebcache_tiles
