@@ -16,8 +16,8 @@
         <gwc.version>1.27.0</gwc.version>
         <!-- override dependencies from parent pom to match the ones for the gwc version -->
         <gt.version>33.0</gt.version>
-        <spring.version>5.3.39</spring.version>
-        <spring-security.version>5.7.13</spring-security.version>
+        <spring.version>7.0.6</spring.version>
+        <spring-security.version>5.7.14</spring-security.version>
         <hazelcast.version>5.3.8</hazelcast.version>
         <context.name>geowebcache</context.name>
         <packageDatadirScmVersion>master</packageDatadirScmVersion>

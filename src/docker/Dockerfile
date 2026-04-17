@@ -2,11 +2,9 @@
 FROM debian:bookworm-slim as builder
 
 RUN mkdir -p /geowebcache
-COPY target/geowebcache.war /
+COPY var/lib/jetty/webapps/geowebcache.war /
 
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt,sharing=locked \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     unzip
 
@@ -26,7 +24,7 @@ USER root
 
 COPY --from=builder --chown=jetty:jetty /geowebcache /var/lib/jetty/webapps/geowebcache
 
-RUN mkdir /mnt/geowebcache_tiles /mnt/geowebcache_datadir /etc/georchestra &&       \
+RUN mkdir /mnt/geowebcache_tiles /mnt/geowebcache_datadir &&       \
     chown jetty:jetty /etc/georchestra /mnt/geowebcache_tiles /mnt/geowebcache_datadir
 
 # restore jetty user
