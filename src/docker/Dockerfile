@@ -1,4 +1,16 @@
-FROM jetty:9.4.46-jre11
+# Multistage to unzip the war file and set correct permissions on the data directories
+FROM debian:trixie-slim as builder
+
+RUN mkdir -p /geowebcache
+COPY var/lib/jetty/webapps/geowebcache.war /
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    unzip
+
+RUN unzip -d /geowebcache /geowebcache.war
+
+FROM jetty:9-jre17 as geowebcache
 
 ENV GEOWEBCACHE_CONFIG_DIR=/mnt/geowebcache_datadir \
     GEOWEBCACHE_CACHE_DIR=/mnt/geowebcache_tiles
@@ -10,9 +22,9 @@ COPY --chown=jetty:jetty . /
 # Temporary switch to root
 USER root
 
-RUN mkdir /mnt/geowebcache_tiles /mnt/geowebcache_datadir &&                              \
-    unzip -d /var/lib/jetty/webapps/geowebcache /var/lib/jetty/webapps/geowebcache.war && \
-    rm -f /var/lib/jetty/webapps/geowebcache.war &&                                       \
+COPY --from=builder --chown=jetty:jetty /geowebcache /var/lib/jetty/webapps/geowebcache
+
+RUN mkdir /mnt/geowebcache_tiles /mnt/geowebcache_datadir &&       \
     chown jetty:jetty /etc/georchestra /mnt/geowebcache_tiles /mnt/geowebcache_datadir
 
 # restore jetty user

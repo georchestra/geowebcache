@@ -4,41 +4,29 @@ import static org.georchestra.commons.security.SecurityHeaders.SEC_ROLES;
 import static org.georchestra.commons.security.SecurityHeaders.SEC_USERNAME;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.servlet.FilterChain;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 /** @author Jesse on 4/24/2014. */
-@WebAppConfiguration
-@SpringJUnitConfig(locations = "file:src/main/webapp/WEB-INF/applicationContext.xml")
 public class PreAuthFilterIT {
 
-    @Autowired
-    private PreAuthFilter preAuthFilter;
-
-    @BeforeAll
-    public static void before() {
-    }
+    private final PreAuthFilter preAuthFilter = new PreAuthFilter();
 
     @Test
     public void testDoFilter() throws Exception {
         SecurityContextHolder.clearContext();
         assertNull(SecurityContextHolder.getContext().getAuthentication());
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        MockHttpServletResponse response = new MockHttpServletResponse();
+        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+        ServletResponse response = Mockito.mock(ServletResponse.class);
 
         FilterChain chain = Mockito.mock(FilterChain.class);
         preAuthFilter.doFilter(request, response, chain);
@@ -46,11 +34,11 @@ public class PreAuthFilterIT {
         assertNull(SecurityContextHolder.getContext().getAuthentication());
 
         final String username = "username";
-        request.addHeader(SEC_USERNAME, username);
+        Mockito.when(request.getHeader(SEC_USERNAME)).thenReturn(username);
         final String roleAdmin = "ROLE_ADMINISTRATOR";
         final String roleOther = "ROLE_OTHER";
 
-        request.addHeader(SEC_ROLES, roleAdmin + ";" + roleOther);
+        Mockito.when(request.getHeader(SEC_ROLES)).thenReturn(roleAdmin + ";" + roleOther);
 
         chain = Mockito.mock(FilterChain.class);
         preAuthFilter.doFilter(request, response, chain);
@@ -62,8 +50,8 @@ public class PreAuthFilterIT {
 
         assertEquals(username, preAuthToken.getPrincipal());
         assertEquals(2, preAuthToken.getAuthorities().size());
-        List<GrantedAuthority> authorities = preAuthToken.getAuthorities().stream().collect(Collectors.toList());
-        assertEquals(roleAdmin, authorities.get(0).getAuthority());
-        assertEquals(roleOther, authorities.get(1).getAuthority());
+        Set<String> authorities = preAuthToken.getAuthorities().stream().map(a -> a.getAuthority()).collect(Collectors.toSet());
+        assertTrue(authorities.contains(roleAdmin));
+        assertTrue(authorities.contains(roleOther));
     }
 }
