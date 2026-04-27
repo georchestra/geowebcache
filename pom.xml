@@ -18,7 +18,7 @@
         <gt.version>33.0</gt.version>
         <spring.version>7.0.6</spring.version>
         <spring-security.version>5.7.14</spring-security.version>
-        <hazelcast.version>5.3.8</hazelcast.version>
+        <hazelcast.version>5.6.0</hazelcast.version>
         <context.name>geowebcache</context.name>
         <packageDatadirScmVersion>master</packageDatadirScmVersion>
         <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
