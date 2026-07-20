@@ -34,6 +34,16 @@ VOLUME [ "/mnt/geowebcache_datadir", "/mnt/geowebcache_tiles", "/tmp", "/run/jet
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
 
+# OCI image labels (https://github.com/opencontainers/image-spec/blob/main/annotations.md)
+LABEL org.opencontainers.image.title="geOrchestra GeoWebCache" \
+      org.opencontainers.image.description="GeoWebCache server for the geOrchestra SDI" \
+      org.opencontainers.image.authors="geOrchestra PSC <psc@georchestra.org>" \
+      org.opencontainers.image.vendor="geOrchestra" \
+      org.opencontainers.image.licenses="LGPL-2.1" \
+      org.opencontainers.image.url="https://www.georchestra.org/" \
+      org.opencontainers.image.documentation="https://docs.georchestra.org/" \
+      org.opencontainers.image.source="https://github.com/georchestra/geowebcache"
+
 CMD ["sh", "-c", "exec java \
 -Djava.io.tmpdir=/tmp/jetty \
 -Dgeorchestra.datadir=/etc/georchestra \
