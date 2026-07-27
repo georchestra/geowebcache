@@ -37,7 +37,7 @@ jobs:
 
     - name: "Building docker image"
       if: github.repository == 'georchestra/geowebcache' && github.actor != 'dependabot[bot]'
-      run: mvn --no-transfer-progress clean package docker:build -Pdocker,log4j-logstash,sentry-log4j -DdockerImageName=georchestra/geowebcache:${{ steps.version.outputs.VERSION }} -DskipTests
+      run: mvn --no-transfer-progress clean package docker:build -Pdocker -DdockerImageName=georchestra/geowebcache:${{ steps.version.outputs.VERSION }} -DskipTests
 
     - name: "Logging in docker.io"
       if: github.repository == 'georchestra/geowebcache' && github.actor != 'dependabot[bot]' && github.event_name != 'pull_request'
