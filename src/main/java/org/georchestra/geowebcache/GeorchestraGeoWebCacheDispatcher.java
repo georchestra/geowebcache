@@ -66,6 +66,15 @@ public class GeorchestraGeoWebCacheDispatcher extends GeoWebCacheDispatcher impl
             + "  </head>\n" + "  <body>\n"
             + "    <geor-header  active-app=\"geowebcache\" config-file=\"@headerConfigFile@\" legacy-header=\"@useLegacyHeader@\" legacy-url=\"@headerUrl@\" logo-url=\"@logoUrl@\" stylesheet=\"@georchestraStylesheet@\" height=\"@headerHeight@\"></geor-header>";
 
+    private String demoPageGeorHeader = """
+            <script src="@headerScript@"></script>
+            <link rel="stylesheet" type="text/css" href="@georchestraStylesheet@" />
+            </head>
+            <body>
+            <geor-header active-app="geowebcache" config-file="@headerConfigFile@" legacy-header="@useLegacyHeader@" legacy-url="@headerUrl@"
+                logo-url="@logoUrl@" stylesheet="@georchestraStylesheet@" height="@headerHeight@"></geor-header>
+            """;
+
     /** Should be invoked through Spring. */
     public GeorchestraGeoWebCacheDispatcher(TileLayerDispatcher tileLayerDispatcher, GridSetBroker gridSetBroker,
             StorageBroker storageBroker, BlobStoreAggregator blobStoreAggregator, ServerConfiguration mainConfiguration,
@@ -125,6 +134,16 @@ public class GeorchestraGeoWebCacheDispatcher extends GeoWebCacheDispatcher impl
         newGeorHeaderInclude = newGeorHeaderInclude.replace("@logoUrl@", this.logoUrl);
         newGeorHeaderInclude = newGeorHeaderInclude.replace("@georchestraStylesheet@", this.georchestraStylesheet);
         newGeorHeaderInclude = newGeorHeaderInclude.replace("@headerConfigFile@", this.headerConfigFile);
+
+        demoPageGeorHeader = demoPageGeorHeader.replace("@instanceName@", this.instanceName);
+        demoPageGeorHeader = demoPageGeorHeader.replace("@headerScript@", this.headerScript);
+        demoPageGeorHeader = demoPageGeorHeader.replace("@useLegacyHeader@", String.valueOf(this.useLegacyHeader));
+        demoPageGeorHeader = demoPageGeorHeader.replace("@headerUrl@", this.headerUrl);
+        demoPageGeorHeader = demoPageGeorHeader.replace("@headerHeight@", this.headerHeight);
+        demoPageGeorHeader = demoPageGeorHeader.replace("@logoUrl@", this.logoUrl);
+        demoPageGeorHeader = demoPageGeorHeader.replace("@georchestraStylesheet@", this.georchestraStylesheet);
+        demoPageGeorHeader = demoPageGeorHeader.replace("@headerConfigFile@", this.headerConfigFile);
+
     }
 
     @Override
@@ -205,15 +224,12 @@ public class GeorchestraGeoWebCacheDispatcher extends GeoWebCacheDispatcher impl
             out.close();
         }
 
-        final String html = out.toString("UTF-8");
+        String html = out.toString("UTF-8");
+        // Injects the geOrchestra header into the demo pages, without getting rid of necessary js/styles/css.
+        // TODO: this is ugly, and would probably requires a revisit, especially each time the Demo.makeMap will evolve ...
+        html = html.replace("</head>\n<body>", demoPageGeorHeader);
 
-        final String bodyTag = "<body>";
-        final String htmlBody = html.substring(html.indexOf(bodyTag) + bodyTag.length());
-
-        StringBuilder builder = new StringBuilder(newGeorHeaderInclude);
-
-        builder.append(htmlBody);
-        final byte[] bytes = builder.toString().getBytes("UTF-8");
+        final byte[] bytes = html.getBytes("UTF-8");
         response.setContentLength(bytes.length);
         response.getOutputStream().write(bytes);
     }

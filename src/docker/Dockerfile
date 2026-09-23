@@ -25,7 +25,8 @@ USER root
 COPY --from=builder --chown=jetty:jetty /geowebcache /var/lib/jetty/webapps/geowebcache
 
 RUN mkdir /mnt/geowebcache_tiles /mnt/geowebcache_datadir &&       \
-    chown jetty:jetty /etc/georchestra /mnt/geowebcache_tiles /mnt/geowebcache_datadir
+    chown jetty:jetty /etc/georchestra /mnt/geowebcache_tiles /mnt/geowebcache_datadir && \
+    rm -f /var/lib/jetty/webapps/geowebcache.war
 
 # restore jetty user
 USER jetty
