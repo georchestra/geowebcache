@@ -8,7 +8,7 @@
 
 # Featured tags
 
-- `latest`, `25.0.x`, `24.0.x`
+- `1.27.0-georchestra`
 
 # Quick reference
 
@@ -28,7 +28,7 @@
 
 # How to use this image
 
-As for every other geOrchestra webapp, its configuration resides in the data directory ([datadir](https://github.com/georchestra/datadir)), typically something like /etc/georchestra, where it expects to find a geowebcache sub-directory.
+As for every other geOrchestra webapps, its configuration resides in the data directory ([datadir](https://github.com/georchestra/datadir)), typically something like /etc/georchestra, where it expects to find a geowebcache sub-directory.
 
 It is recommended to use the official docker composition: https://github.com/georchestra/docker.
 
@@ -36,7 +36,7 @@ For this specific component, see the section `geowebcache` in the [`georchestra/
 
 ## Where is it built
 
-This image is built using maven : `../mvnw  package docker:build -Pdocker` in `georchestra` repo `geowebcache/` folder.
+This image is built using maven : `../mvnw  package docker:build -Pdocker` in the following repository.
 
 # License
 
