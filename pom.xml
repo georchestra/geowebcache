@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.georchestra</groupId>
     <artifactId>geowebcache</artifactId>
-    <version>25.2.1-SNAPSHOT</version>
+    <version>1.27.0-georchestra</version>
 
     <packaging>jar</packaging>
     <name>geOrchestra GeoWebCache Web Application</name>
@@ -296,7 +296,7 @@
                                 <condition property="project.packageVersion"
                                            value="${gwc.version}.${maven.build.timestamp}~${build.commit.id.abbrev}"
                                            else="99.master.${maven.build.timestamp}~${build.commit.id.abbrev}">
-                                    <matches string="${build.branch}" pattern="\d+\.\d+\.x$"/>
+                                    <matches string="${build.branch}" pattern="\d+\.\d+.\d+-georchestra$"/>
                                 </condition>
                             </target>
                         </configuration>
