@@ -45,6 +45,10 @@
     <property name="headerConfigFile" value="${headerConfigFile:}" />
   </bean>
 
+  <!-- GeoWebCacheDispatcherController maps "" and "/home", but trailing slash matching is not enabled anymore
+    since Spring 6, so "/geowebcache/" would end up in a 404. -->
+  <mvc:view-controller path="/" view-name="redirect:/home" />
+
   <!-- Override gwcURLMangler defined in core-context.xml -->
   <bean id="gwcURLMangler" class="org.georchestra.geowebcache.GeorchestraURLMangler">
     <constructor-arg value="${publicUrl:https://${domainName}}" />
@@ -76,6 +80,9 @@
     <security:intercept-url method="GET" pattern="/rest/wmts/WMTSCapabilities.xml"
       access="permitAll" />
     <security:intercept-url pattern="/rest/**" access="hasRole('ROLE_ADMINISTRATOR')" />
+    <!-- Since Spring Security 6, requests not matching any intercept-url are denied by default.
+      Keep everything outside of /rest/** (OGC services, demo pages, home) publicly accessible. -->
+    <security:intercept-url pattern="/**" access="permitAll" />
 
     <security:http-basic entry-point-ref="authenticationEntryPoint" />
     <security:csrf disabled="true" /> <!-- TODO Update forms so we can enable this -->

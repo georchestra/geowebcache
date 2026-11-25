@@ -8,7 +8,7 @@
 
 # Featured tags
 
-- `1.27.0-georchestra`
+- `2.0.2-georchestra`
 
 # Quick reference
 

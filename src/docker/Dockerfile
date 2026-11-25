@@ -10,12 +10,12 @@ RUN apt-get update && \
 
 RUN unzip -d /geowebcache /geowebcache.war
 
-FROM jetty:9-jre17 as geowebcache
+FROM jetty:12.1-jdk17 as geowebcache
 
 ENV GEOWEBCACHE_CONFIG_DIR=/mnt/geowebcache_datadir \
     GEOWEBCACHE_CACHE_DIR=/mnt/geowebcache_tiles
 
-RUN java -jar "$JETTY_HOME/start.jar" --create-startd --add-to-start=jmx,jmx-remote,stats,http-forwarded
+RUN java -jar "$JETTY_HOME/start.jar" --add-modules=ee11-deploy,jmx,jmx-remote,statistics,forwarded
 
 COPY --chown=jetty:jetty . /
 

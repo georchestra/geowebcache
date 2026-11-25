@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

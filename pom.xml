@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.georchestra</groupId>
     <artifactId>geowebcache</artifactId>
-    <version>1.27.0-georchestra</version>
+    <version>2.0.2-georchestra</version>
 
     <packaging>jar</packaging>
     <name>geOrchestra GeoWebCache Web Application</name>
@@ -12,13 +12,12 @@
         <gwc.unpack.dir>${project.build.directory}/unpacked-webapp</gwc.unpack.dir>
         <geowebcache.war.excludes/>
         <maven.test.skip>false</maven.test.skip>
-        <georchestra.version>25.0.3</georchestra.version>
-        <gwc.version>1.27.0</gwc.version>
+        <georchestra.version>26.0.1</georchestra.version>
+        <gwc.version>2.0.2</gwc.version>
         <!-- override dependencies from parent pom to match the ones for the gwc version -->
-        <gt.version>33.0</gt.version>
-        <spring.version>7.0.6</spring.version>
-        <spring-security.version>5.7.14</spring-security.version>
-        <hazelcast.version>5.3.8</hazelcast.version>
+        <gt.version>35.2</gt.version>
+        <spring.version>7.0.7</spring.version>
+        <spring-security.version>7.0.5</spring-security.version>
         <context.name>geowebcache</context.name>
         <packageDatadirScmVersion>master</packageDatadirScmVersion>
         <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
@@ -103,17 +102,7 @@
         </dependency>
         <dependency>
             <groupId>org.geowebcache</groupId>
-            <artifactId>gwc-distributed</artifactId>
-            <version>${gwc.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.geowebcache</groupId>
             <artifactId>gwc-aws-s3</artifactId>
-            <version>${gwc.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.geowebcache</groupId>
-            <artifactId>gwc-sqlite</artifactId>
             <version>${gwc.version}</version>
         </dependency>
 
@@ -129,9 +118,9 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -143,13 +132,14 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.0</version>
+            <version>5.13.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.7.0</version>
+            <version>5.13.4</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -160,18 +150,8 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>4.11.0</version>
+            <version>5.23.0</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast</artifactId>
-            <version>${hazelcast.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast-spring</artifactId>
-            <version>${hazelcast.version}</version>
         </dependency>
     </dependencies>
 
@@ -259,24 +239,21 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>11.0.12</version>
+                <groupId>org.eclipse.jetty.ee11</groupId>
+                <artifactId>jetty-ee11-maven-plugin</artifactId>
+                <version>12.1.7</version>
                 <configuration>
                     <webApp>
                         <contextPath>/geowebcache</contextPath>
                     </webApp>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <scan>10</scan>
                     <stopPort>8090</stopPort>
                     <stopKey>GWC_JETTY_STOP</stopKey>
                     <supportedPackagings>
                         <supportedPackaging>jar</supportedPackaging>
                     </supportedPackagings>
                     <systemProperties>
-                        <systemProperty>
-                            <name>georchestra.datadir</name>
-                            <value>/etc/georchestra</value>
-                        </systemProperty>
+                        <georchestra.datadir>/etc/georchestra</georchestra.datadir>
                     </systemProperties>
                 </configuration>
             </plugin>

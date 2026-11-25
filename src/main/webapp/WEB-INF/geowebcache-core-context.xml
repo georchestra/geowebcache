@@ -134,10 +134,7 @@
     <!--
       Should the default grids be named EPSG:4326 and EPSG:900913 (TRUE),
       or (FALSE) use the new names similar to what WMTS suggests,
-      GlobalCRS84Geometric and GoogleMapsCompatible ? 
-      
-      If you say FALSE here, you have to manually
-      rename the directories and entries in the H2 database.
+      GlobalCRS84Geometric and GoogleMapsCompatible ?
      -->
      <constructor-arg type="boolean" value="TRUE" />
   </bean>
@@ -183,8 +180,7 @@
   <!-- Thread pool for seeding -->
   <bean id="gwcSeederThreadPoolExec" 
     class="org.geowebcache.seed.SeederThreadPoolExecutor">
-    <constructor-arg value="16"/><!-- Size of core pool -->
-    <constructor-arg value="32"/><!-- Maximum size of pool -->
+    <constructor-arg ref="gwcXmlConfig"/>
   </bean>
 
   <!-- Breeder (the one that seeds) -->
@@ -207,29 +203,7 @@
     <constructor-arg ref="gwcDefaultStorageFinder"/>
   </bean>
 
-  <!-- The tool performing the automatic migration between metastore and fs hashes -->
-  <bean id="metastoreRemover" class="org.geowebcache.storage.MetastoreRemover">
-    <constructor-arg ref="gwcDefaultStorageFinder"/>
-  </bean>
-
   <bean id="gwcURLMangler" class="org.geowebcache.util.NullURLMangler" />
-
+  
   <bean id="gwcSecurityDispatcher" class="org.geowebcache.filter.security.SecurityDispatcher" />
-  
-  <bean id="cacheConfiguration" class="org.geowebcache.storage.blobstore.memory.CacheConfiguration">
-    <property name="hardMemoryLimit" value="64"/> <!-- 64 Mb -->
-    <property name="policy" value="EXPIRE_AFTER_ACCESS"/> <!-- 64 Mb -->
-  </bean>
-  
-   <bean id="guavaCacheProvider" class="org.geowebcache.storage.blobstore.memory.guava.GuavaCacheProvider">
-     <constructor-arg ref="cacheConfiguration"/>
-  </bean>
-  
-  <bean id="gwcMemoryBlobStore" class="org.geowebcache.storage.blobstore.memory.MemoryBlobStore" destroy-method="destroy">
-    <property name="store" ref="gwcBlobStore" />
-    <!--property name="cacheProvider" ref="guavaCacheProvider" /-->
-    <!-- property name="cacheBeanName" value="guavaCacheProvider" /-->
-  </bean>
-  
-  <bean id="gwcNullBlobStore" class="org.geowebcache.storage.blobstore.memory.NullBlobStore" destroy-method="destroy"/>
 </beans>
